@@ -63,7 +63,7 @@ route.post('/', async (req, res) => {
 
 
     })
-    res.send("sucessfully done")
+    res.status(201).send("sucessfully done")
 
 })
 

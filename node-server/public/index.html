@@ -9,36 +9,61 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="app.js">
-          // for (i = 0; i < taskList.length; i++) {
-    //     console.log(taskList[i].title)
-    //     document.querySelector('.data').innerHTML += taskList[i].title + "  " + taskList[i].description + "  " + taskList[i].duedate + "  " + taskList[i].status +"-----"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+     
+     
+        <link href="bootstrap4-glyphicons/css/bootstrap-glyphicons.css" rel="stylesheet">
 
-    // } </script>
 
-</head>
+    </head>
 
-<body>
+<body onload=onLoad()>
+    
+    <br>
     <table class="table table-dark">
         <thead>
-          <tr>
             
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">DueDate</th>
-            <th scope="col">Priority</th>
-            <th scope="col">Status</th>
-          </tr>
-          </thead>
-          <tbody id="tbody">
+            <tr>
 
-          </tbody>
-          </table>
-        </table>
-   
-
-   
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">DueDate</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Status</th>
+                <th scope="col">Update</th>
+                <th scope="col">Notes</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+           
+        </tbody>
+    </table>
+    </table>
+    <script src="app.js"> </script>
+   <a href="addtaskform.html">  <button type="button" class="btn btn-light ";>Add Task</button></a>
+    
+   <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" style = "float: center;"
+        aria-haspopup="true" aria-expanded="false">
+        Sort by
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" onclick= sortByDate() id="duedate">DueDate</a>
+        <a class="dropdown-item" onclick= sortByPriority() id ="priority">Priority</a>
+        <a class="dropdown-item" onclick= sortByStatus() id = "status">Status</a>
+    </div>
+</div>
+    
 </body>
 
 </html>

@@ -7,26 +7,22 @@ data.sort(function (a, b) {
  
 //---------------------------------------------------------------
 //sort according to priority
-// data.forEach(element => {
-//     if (element.priority.toLowerCase() === 'high') {
-//         element.priority = 0
-//     }
-//     else if (element.priority.toLowerCase() === 'low') {
-//         element.priority = 1
-//     } else {
-//         element.priority =2
-//     }
+data.forEach(element => {
+    if (element.priority.toLowerCase() === 'high') {
+        element.priority = 0
+    }
+    else if (element.priority.toLowerCase() === 'low') {
+        element.priority = 1
+    } else {
+        element.priority =2
+    }
     
-// });
-// data.sort(function(a,b) {
-//     return a.priority - b.priority
-// })
+});
+data.sort(function(a,b) {
+    return a.priority - b.priority
+})
 // console.log(data)
 
 //--------------------------------------------------------
 
 // sort according to status
-// data.sort(function(a,b) {
-//          return b.status.localeCompare(a.status);
-//     })
-//     console.log(data)
