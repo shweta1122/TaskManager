@@ -1,7 +1,7 @@
 const express = require('express')
 const { sequelize } = require('./db')
 const server = express()
-
+const port = process.env.PORT || 2121
 const todos = require('./todos')
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
