@@ -12,6 +12,8 @@ server.use(express.static('public'))
 
 sequelize.sync()
   .then(() => {
+    console.log(port);
+
     server.listen(port)
   })
   .catch((err) => {
