@@ -12,7 +12,7 @@ server.use(express.static('public'))
 
 sequelize.sync()
   .then(() => {
-    server.listen(2121)
+    server.listen(port)
   })
   .catch((err) => {
     console.error(err)
