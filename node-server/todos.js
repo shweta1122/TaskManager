@@ -34,13 +34,15 @@ route.get('/:id/notes', async (req, res) => {
     res.send(await notesById)
 })
 route.post('/:id/notes', async (req, res) => {
-
+    console.log("--------------------------------------------")
+    console.log(req.body.notes)
+    console.log(req.params.id)
     await Notes.create({
         notes: req.body.notes,
         todoId: req.params.id
 
     })
-    res.send("sucessfully")
+    res.status(201).send("sucessfully")
 })
 
 route.post('/', async (req, res) => {

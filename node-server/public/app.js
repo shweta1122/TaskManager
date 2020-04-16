@@ -1,7 +1,16 @@
 var global = null
 var currId = null;
 var taskList = null
-var notesList = null
+globalNoteList = null
+
+openWindow = []
+
+noteStruct = fetch("Notes.html").then(res => res.text())
+noteDiv = null
+noteStruct.then(i => {
+    noteDiv = i
+})
+
 async function onLoad() {
     fromServer = await fetch("/todos", { method: 'GET' })
     taskList = await fromServer.json()
@@ -9,13 +18,12 @@ async function onLoad() {
     displayTodo(taskList)
 }
 
-async function onLoadNotes() {
-    const id = getId()
-    console.log(id)
+async function onLoadNotes(id) { //fetch check ur db code
     fromServer = await fetch("/todos/" + id + "/notes", { method: 'GET' })
-    notesList = await fromServer.json()
-
-    displayNotes(notesList)
+    resolvedPromise = fromServer
+    notesList = await resolvedPromise.json()
+    globalNoteList = notesList
+    return (notesList)
 }
 
 const ulist = document.getElementById("ul")
@@ -38,7 +46,7 @@ function displayTodo() {
     //    taskList = sortByDate(taskList)
     for (i = 0; i < taskList.length; i++) {
         //console.log(taskList[i].duedate)
-        const tableRow = `<tr id ="${taskList[i].id}">
+        let tableRow = `<tr id ="${taskList[i].id}">
 
                        <td> ${(taskList[i].title)} </td>
                        <td> ${taskList[i].description} </td>
@@ -47,18 +55,101 @@ function displayTodo() {
                        <td> ${taskList[i].status} </td>
                        <td> 
                         <button type="button" class="btn btn-light " onclick = "window.location.href = 'updateTask.html?id=${taskList[i].id}'">Update Task</button>   </td>
-                       
                         <td>  
-                         <button type="button" class="btn btn-light"  onclick = "window.location.href = 'Notes.html?id=${taskList[i].id}' ";>Notes</button>  </td>
-                     
+                        <button type="button" class="btn btn-light"  id = "button${taskList[i].id}" ;>Notes</button>  </td>
+                       </tr>
+                       <tr> 
+                        <td colspan = "7" id="hiddenRow${taskList[i].id}"></td>
                        </tr>`;
-
-
-
         table.innerHTML += tableRow
+        table.querySelector(`#button${taskList[i].id}`).addEventListener("click", showNotes)
+    }
+    for (i = 0; i < taskList.length; i++) {
+        table.querySelector(`#button${taskList[i].id}`).addEventListener("click", showNotes)
     }
 }
 
+//<button type="button" class="btn btn-light"  onclick = "window.location.href = 'Notes.html?id=${taskList[i].id}' ";>Notes</button>  </td>
+async function showNotes() {
+    console.log("In showNotes", this.id)
+    currentTaskID = this.id.split("button")[1]
+
+    if (openWindow.indexOf(currentTaskID) !== -1) {
+        await onLoadNotes(currentTaskID)
+        nodeDivTag = document.getElementById(`hiddenRow${currentTaskID}`)
+
+        nodeDivTag.innerHTML = ""
+
+        openWindow = openWindow.filter(function (i) {
+            return i !== currentTaskID
+        })
+
+    } else {
+        // we fetch notes
+        openWindow.push(currentTaskID)
+        await onLoadNotes(currentTaskID)
+        noteDivTag = document.getElementById(`hiddenRow${currentTaskID}`)
+        noteDivTag.innerHTML = noteDiv
+        list = noteDivTag.querySelector("#CardListID")
+
+        for (i = 0; i < notesList.length; i++) {
+            listItem = document.createElement("li")
+            listItem.className += "list-group-item"
+            listItem.innerHTML = notesList[i].notes
+            list.appendChild(listItem)
+        }
+
+        btn = noteDivTag.querySelector("#addNoteBtn")
+        btn.setAttribute("id", `addNoteBtn${currentTaskID}`)
+
+        inp = noteDivTag.querySelector("#addNoteInput")
+        inp.setAttribute("id", `addNoteInput${currentTaskID}`)
+
+        // console.log(notesList)
+    }
+
+
+}
+
+
+async function addNote(id) {
+    taskID = id.split("addNoteBtn")[1]
+    console.log(taskID)
+    noteValue = document.getElementById(`addNoteInput${taskID}`).value
+    console.log(noteValue)
+
+    noteDivTag = document.getElementById(`hiddenRow${currentTaskID}`)
+    list = noteDivTag.querySelector("#CardListID")
+
+    listItem = document.createElement("li")
+    listItem.className += "list-group-item"
+    listItem.innerHTML = noteValue
+    list.appendChild(listItem)
+    
+    console.log(document.getElementById(`addNoteInput${taskID}`).value)
+    noteValue = {
+        notes : document.getElementById(`addNoteInput${taskID}`).value
+    }
+
+
+    res = await fetch("todos/"+taskID+"/notes", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(noteValue)
+    })
+    console.log("this is note value", noteValue)
+    console.log(JSON.stringify(noteValue))
+    console.log('Data sent from Client side')
+
+    if (res.status == 201) {
+        console.log('Successfully Added')
+    } else {
+        console.error('Some problem ocurred')
+    }
+
+}
 
 function reloadWindow() {
     window.location.replace("updateTask.html")
