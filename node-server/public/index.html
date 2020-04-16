@@ -21,7 +21,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-<script src = "date.js"></script>
+
     <!-- <link href="bootstrap4-glyphicons/css/bootstrap-glyphicons.css" rel="stylesheet"> -->
 
 
@@ -29,11 +29,26 @@
 
 <body onload=onLoad()>
 
-   
-    <div >
-        <h1 class="display-4" id="date" onload=date()>Task Manager</h1>
+
+    <div>
+        <h1 class="display-4">Task Manager</h1>
     </div>
     <br>
+
+    <a href="addtaskform.html"> <button type="button" class="btn btn-light " id="addbutton" ;>Add Task</button></a>
+    <div class="dropdown" id="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            style="float: center;" aria-haspopup="true" aria-expanded="false">
+            Sort by
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" onclick=sortByDate() id="duedate">DueDate</a>
+            <a class="dropdown-item" onclick=sortByPriority() id="priority">Priority</a>
+            <a class="dropdown-item" onclick=sortByStatus() id="status">Status</a>
+        </div>
+    </div>
+    <br>
+
     <table class="table table-dark" id="table">
         <thead>
 
@@ -54,19 +69,7 @@
     </table>
     </table>
     <script src="app.js"> </script>
-    <a href="addtaskform.html"> <button type="button" class="btn btn-light " id="addbutton" ;>Add Task</button></a>
 
-    <div class="dropdown" id="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-            style="float: center;" aria-haspopup="true" aria-expanded="false">
-            Sort by
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" onclick=sortByDate() id="duedate">DueDate</a>
-            <a class="dropdown-item" onclick=sortByPriority() id="priority">Priority</a>
-            <a class="dropdown-item" onclick=sortByStatus() id="status">Status</a>
-        </div>
-    </div>
 
 </body>
 

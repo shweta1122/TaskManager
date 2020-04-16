@@ -26,8 +26,7 @@ async function onLoadNotes(id) { //fetch check ur db code
     return (notesList)
 }
 
-const ulist = document.getElementById("ul")
-console.log(ulist)
+
 function displayNotes() {
     console.log(ulist)
     console.log(notesList)
@@ -40,10 +39,7 @@ function displayNotes() {
 const table = document.getElementById("tbody")
 function displayTodo() {
     table.innerHTML = " "
-    console.log("display")
-    console.log(taskList)
-
-    //    taskList = sortByDate(taskList)
+   
     for (i = 0; i < taskList.length; i++) {
         //console.log(taskList[i].duedate)
         let tableRow = `<tr id ="${taskList[i].id}">
@@ -71,7 +67,7 @@ function displayTodo() {
 
 //<button type="button" class="btn btn-light"  onclick = "window.location.href = 'Notes.html?id=${taskList[i].id}' ";>Notes</button>  </td>
 async function showNotes() {
-    console.log("In showNotes", this.id)
+    
     currentTaskID = this.id.split("button")[1]
 
     if (openWindow.indexOf(currentTaskID) !== -1) {
@@ -125,7 +121,7 @@ async function addNote(id) {
     listItem.className += "list-group-item"
     listItem.innerHTML = noteValue
     list.appendChild(listItem)
-    
+
     console.log(document.getElementById(`addNoteInput${taskID}`).value)
     noteValue = {
         notes : document.getElementById(`addNoteInput${taskID}`).value

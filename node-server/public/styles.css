@@ -8,7 +8,7 @@ li {
 
 @media screen and (min-width: 48em) {
 h1 {
-    text-align: justify;
-    padding-left: 500px;
+    text-align: center;
+    /* padding-left: 500px; */
 }
 }

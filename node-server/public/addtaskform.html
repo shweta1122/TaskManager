@@ -8,6 +8,9 @@
 * {
   box-sizing: border-box;
 }
+h1{
+  text-align: center;
+}
 
 input[type=text], select, textarea {
   width: 100%;
@@ -72,7 +75,7 @@ input[type=submit]:hover {
 </head>
 <body>
 
-<h2>Add task</h2>
+  <h1 class="display-4">Add Task</h1>
 
 <div class="container">
   <form >
@@ -109,7 +112,11 @@ input[type=submit]:hover {
           <label for="status">Status</label>
         </div>
         <div class="col-75">
-         <input type="text" id ="status" name="status " id="status" value="incomplete" readonly>
+         <input type="checkbox" id ="status" name="status " id="status" value="incomplete"  checked disabled>
+         <label for="status">incomplete</label>
+         <input type="checkbox" id ="incstatus" name="incstatus " id="incstatus" value="incomplete"  unchecked disabled>
+         
+         <label for="inc">complete</label>
         </div>
       </div>
     <div class="row">
