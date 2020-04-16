@@ -1,7 +1,7 @@
 var global = null
-
+var currId = null;
 var taskList = null
-
+var notesList = null
 async function onLoad() {
     fromServer = await fetch("/todos", { method: 'GET' })
     taskList = await fromServer.json()
@@ -9,8 +9,27 @@ async function onLoad() {
     displayTodo(taskList)
 }
 
-const table = document.getElementById("tbody")
+async function onLoadNotes() {
+    const id = getId()
+    console.log(id)
+    fromServer = await fetch("/todos/" + id + "/notes", { method: 'GET' })
+    notesList = await fromServer.json()
 
+    displayNotes(notesList)
+}
+
+const ulist = document.getElementById("ul")
+console.log(ulist)
+function displayNotes() {
+    console.log(ulist)
+    console.log(notesList)
+    for (i = 0; i < notesList.length; i++) {
+        console.log(notesList[i].notes)
+        const list = `<li class="list-group-item"> ${notesList[i].notes}</li>`
+    }
+    ulist.innerHTML += list
+}
+const table = document.getElementById("tbody")
 function displayTodo() {
     table.innerHTML = " "
     console.log("display")
@@ -18,7 +37,7 @@ function displayTodo() {
 
     //    taskList = sortByDate(taskList)
     for (i = 0; i < taskList.length; i++) {
-        console.log(taskList[i].duedate)
+        //console.log(taskList[i].duedate)
         const tableRow = `<tr id ="${taskList[i].id}">
 
                        <td> ${(taskList[i].title)} </td>
@@ -26,9 +45,11 @@ function displayTodo() {
                        <td> ${(taskList[i].duedate).substring(0, 10)} </td>
                        <td> ${taskList[i].priority} </td>
                        <td> ${taskList[i].status} </td>
-                       <td> <a href="updateTask.html"> <button type="button" class="btn btn-light " onclick = assigId(${taskList[i].id});>Update Task</button></a>   </td>
+                       <td> 
+                        <button type="button" class="btn btn-light " onclick = "window.location.href = 'updateTask.html?id=${taskList[i].id}'">Update Task</button>   </td>
                        
-                        <td> <a href="addtaskform.html">  <button type="button" class="btn btn-light  ";>Notes</button></a>  </td>
+                        <td>  
+                         <button type="button" class="btn btn-light"  onclick = "window.location.href = 'Notes.html?id=${taskList[i].id}' ";>Notes</button>  </td>
                      
                        </tr>`;
 
@@ -37,11 +58,12 @@ function displayTodo() {
         table.innerHTML += tableRow
     }
 }
- var id =0;
-function assigId(id) {
-    id = id
+
+
+function reloadWindow() {
+    window.location.replace("updateTask.html")
 }
-console.log(id)
+
 async function addTask() {
     var task = {
 
@@ -74,21 +96,34 @@ async function addTask() {
 
 
 
-async function updateTask(id) {
-    
+
+
+function getId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id');
+}
+
+
+
+
+
+
+async function updateTask() {
+    const id = getId()
+    console.log("hi")
     console.log(id)
-    
-    
+
+
     var task = {
 
 
-        title: document.getElementById("title").value,
-        description: document.getElementById("description").value,
+        // title: document.getElementById("title").value,
+        // description: document.getElementById("description").value,
         duedate: document.getElementById("duedate").value,
         priority: document.getElementById("priority").value,
         status: document.getElementById("status").value
     }
-    resp = await fetch('/todos/id', {
+    resp = await fetch('/todos/' + id, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -132,34 +167,34 @@ function sortByPriority() {
         else if (element.priority.toLowerCase() === 'low') {
             element.priority = 2
         } else {
-            element.priority =1
+            element.priority = 1
         }
-        
+
     });
-    taskList.sort(function(a,b) {
+    taskList.sort(function (a, b) {
         return a.priority - b.priority
     })
-     
+
     taskList.forEach(element => {
-        if (element.priority === 0 ) {
+        if (element.priority === 0) {
             element.priority = 'high'
         }
         else if (element.priority === 2) {
-            element.priority ='low'
-        } else if(element.priority === 1) {
+            element.priority = 'low'
+        } else if (element.priority === 1) {
             element.priority = 'medium'
         }
-        
+
     });
 
     displayTodo()
 }
 
 function sortByStatus() {
-    taskList.sort(function(a,b) {
+    taskList.sort(function (a, b) {
         return b.status.localeCompare(a.status);
-   })
-   displayTodo()
+    })
+    displayTodo()
 }
 
 

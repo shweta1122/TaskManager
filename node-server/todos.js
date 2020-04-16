@@ -70,18 +70,21 @@ route.post('/', async (req, res) => {
 
 route.patch('/:id', (req, res) => {
     id = req.params.id
-
-    let title = req.body.title
-    let description = req.body.description
+    console.log("reached server --", id)
+    
+    // let title = req.body.title
+    // let description = req.body.description
+    
     let duedate = req.body.duedate
     let status = req.body.status
     let priority = req.body.priority
+    console.log(duedate)
 
     Todo.sync({ force: false }).then(function () {
-        console.log("table created")
+        
         Todo.update({
-            title: title,
-            description: description,
+            // title: title,
+            // description: description,
             status: status,
             priority: priority,
             duedate: duedate
@@ -93,7 +96,7 @@ route.patch('/:id', (req, res) => {
 
 
     })
-    res.send("sucessfully done")
+    res.status(201).send("sucessfully done")
 })
 
 module.exports = route
