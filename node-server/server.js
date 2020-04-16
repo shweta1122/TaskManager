@@ -17,7 +17,4 @@ sequelize.sync()
   .catch((err) => {
     console.error(err)
   })
-//okieee
-// server.listen(2121)
 
-// server.use('/api', require('./routes,api').route)
